@@ -1,0 +1,56 @@
+; add column marker
+(add-to-list 'load-path "/home/jemmons/.emacs.d/lisp")
+(require 'fill-column-indicator)
+(require 'cython-mode)
+
+(setq fci-rule-width 1)
+(setq fci-rule-column 80)
+(setq fci-rule-color "yellow")
+
+(define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode 1)))
+(global-fci-mode 1)
+
+; matlab syntax highlighting
+(autoload 'matlab-mode "matlab" "Enter MATLAB mode." t)
+(setq auto-mode-alist (cons '("\\.m\\'" . matlab-mode) auto-mode-alist))
+(autoload 'matlab-shell "matlab" "Interactive MATLAB mode." t)
+
+; cython highlighting
+(add-to-list 'auto-mode-alist '("\\.pyx\\'" . cython-mode))
+(add-to-list 'auto-mode-alist '("\\.pxd\\'" . cython-mode))
+
+; make cuda files have c++ highlighting
+(add-to-list 'auto-mode-alist '("\\.cu\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cuh\\'" . c++-mode))
+
+; fortran syntax highlighting
+(add-to-list 'auto-mode-alist '("\\.F90\\'" . fortran-mode))
+
+; make Rnw files have tex highlighting
+(add-to-list 'auto-mode-alist '("\\.Rnw\\'" . tex-mode))
+
+; run Makefile in current dir with C-x b
+(global-set-key (kbd "C-x b") 'recompile) ; Ctrl-x b
+
+; reformat paragraph
+(global-set-key (kbd "C-x p") 'fill-paragraph) ; Ctrl-x p
+
+; spell check text
+(global-set-key (kbd "<f7>") 'flyspell-buffer) ; <f7>
+
+; comment out selected region
+(global-set-key (kbd "C-x /") 'comment-region) ; Ctrl-x /
+
+; uncomment out selected region
+(global-set-key (kbd "C-x ?") 'uncomment-region) ; Ctrl-x ?
+
+; make columns default to 80 chars
+(setq-default fill-column 80) 
+
+; set the default tab size to 4 spaces
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+
+; remove backup files
+(setq make-backup-files nil)
+(put 'scroll-left 'disabled nil)
